@@ -116,6 +116,19 @@ export class ReservationManager {
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.reservationRepository.delete(id);
+    const reservation = await this.reservationRepository.findById(id);
+    const result = await this.reservationRepository.delete(id);
+
+    if (result && reservation) {
+      logger.info(`Reservation ${id} deleted successfully`, {
+        action: LogAction.RESERVATION_DELETE,
+        userId: reservation.userId,
+        vehicleId: reservation.vehicleId,
+        parkingSpotId: reservation.parkingSpotId,
+        reservationId: reservation.id,
+      });
+    }
+
+    return result;
   }
 }

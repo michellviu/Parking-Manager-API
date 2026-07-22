@@ -74,7 +74,7 @@ import { roleMiddleware as rMiddleware } from '../middlewares/role.middleware';
  *           schema:
  *             type: object
  *             properties:
- *               fullName:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
@@ -246,6 +246,21 @@ router.delete('/users/:id', authMiddleware, rMiddleware(Role.ADMIN), userControl
  *     description: Create a new vehicle for the authenticated user
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               licensePlate:
+ *                 type: string
+ *               brand:
+ *                 type: string
+ *               model:
+ *                 type: string
+ *               color:
+ *                 type: string
  *     responses:
  *       '201':
  *         description: Vehicle created successfully
@@ -329,6 +344,21 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               licensePlate:
+ *                 type: string
+ *               brand:
+ *                 type: string
+ *               model:
+ *                 type: string
+ *               color:
+ *                 type: string
  *     responses:
  *       '200':
  *         description: Vehicle updated successfully
@@ -403,6 +433,19 @@ router.get(
  *     description: Create a new parking spot
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               spotNumber:
+ *                 type: string
+ *               floor:
+ *                 type: string
+ *               isActive:
+ *                 type: string
  *     responses:
  *       '201':
  *         description: Parking spot created successfully
@@ -491,6 +534,19 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               spotNumber:
+ *                 type: string
+ *               floor:
+ *                 type: string
+ *               isActive:
+ *                 type: string
  *     responses:
  *       '200':
  *         description: Parking spot updated successfully
@@ -551,6 +607,21 @@ router.delete(
  *     description: Create a new reservation
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               vehicleId:
+ *                 type: string
+ *               parkingSpotId:
+ *                 type: string
+ *               startTime:
+ *                 type: string
+ *               endTime:
+ *                 type: string
  *     responses:
  *       '201':
  *         description: Reservation created successfully
@@ -698,13 +769,25 @@ router.delete(
  *         schema:
  *           type: integer
  *           default: 50
- *         description: Limit the number of logs returned
+ *         description: Maximum number of logs returned when using offset pagination
  *       - in: query
  *         name: start
  *         schema:
  *           type: integer
  *           default: 0
- *         description: Starting index for pagination
+ *         description: Zero-based offset. start=0 returns from the first log, start=1 skips the first log
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Optional page number when you want page-based pagination
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *           default: 50
+ *         description: Optional page size when using page-based pagination
  *       - in: query
  *         name: order
  *         schema:

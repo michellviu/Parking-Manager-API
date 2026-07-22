@@ -3,6 +3,8 @@ import { IAuthService } from '../../domain/interfaces/services/auth.service.inte
 import { IPasswordHasher } from '../../domain/interfaces/services/password-hasher.interface';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { Role } from '../../domain/enums/role.enum';
+import { LogAction } from '../../domain/enums/log-action.enum';
+import logger from '../../infrastructure/logger/winston.logger';
 
 
 export class AuthManager {
@@ -36,6 +38,13 @@ export class AuthManager {
       role,
     });
 
+    logger.info(`User ${user.email} registered successfully`, {
+      action: LogAction.REGISTER,
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
+
     const token = this.authService.generateToken({
       userId: user.id,
       email: user.email,
@@ -62,6 +71,13 @@ export class AuthManager {
     }
 
     const token = this.authService.generateToken({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
+
+    logger.info(`User ${user.email} logged in successfully`, {
+      action: LogAction.LOGIN,
       userId: user.id,
       email: user.email,
       role: user.role,

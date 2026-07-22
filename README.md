@@ -69,11 +69,21 @@ El proyecto está estructurado en 4 capas principales para garantizar la separac
 
 ## 🧪 Ejecutar Pruebas E2E
 
-Se han implementado pruebas E2E automatizadas para los 3 casos de uso principales. Para ejecutarlas (asegúrate de que los contenedores de DB estén corriendo):
+Se han implementado pruebas E2E automatizadas para los 3 casos de uso principales. Para ejecutarlas asegúrate de que los contenedores de DB estén corriendo:
 
 ```bash
 npm run test
 ```
+
+## 📘 Documentación de la API
+
+La API está documentada con **Swagger / OpenAPI**. Puedes abrir la documentación interactiva en:
+
+`http://localhost:3000/api-docs`
+
+También está disponible el documento OpenAPI en formato JSON en:
+
+`http://localhost:3000/api-docs.json`
 
 ## 🔐 Autenticación y Roles
 
@@ -82,4 +92,15 @@ La API utiliza un sistema de roles (`admin`, `employee`, `client`). Debes regist
 
 ## 📖 Colección de Postman
 
-En la raíz del proyecto encontrarás el archivo `Parking-Manager-API.postman_collection.json`. Importa este archivo en Postman para probar todos los endpoints fácilmente. La colección incluye requests de ejemplo para todos los Casos de Uso.
+En la raíz del proyecto encontrarás el archivo `Parking-Manager-API.postman_collection.json`. Sigue estos pasos para usarlo:
+
+1. Abre Postman.
+2. Haz clic en **Import**.
+3. Selecciona el archivo `Parking-Manager-API.postman_collection.json`.
+4. Importa la colección en tu workspace.
+5. Asegúrate de que la API esté corriendo en `http://localhost:3000`.
+6. Ejecuta primero el request de login o registro para obtener el token JWT.
+7. Copia el token generado y agrégalo en el header `Authorization` con el formato `Bearer <tu_token_jwt>`.
+8. Ejecuta los demás requests de la colección según el flujo que quieras probar.
+
+La colección incluye ejemplos para los flujos principales de la API, como autenticación, usuarios, vehículos, reservas, plazas de parqueo y logs.

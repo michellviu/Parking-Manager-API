@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { environment } from './config/environment';
-import { PostgresDataSource } from './infrastructure';
+import { PostgresDataSource, initializeMongoConnection } from './infrastructure';
 import { router, errorHandlerMiddleware } from './presentation';
 import { setupSwagger } from './config/swagger';
 
@@ -52,6 +52,9 @@ class App {
 
   public async start() {
     try {
+      await initializeMongoConnection();
+      console.log('✅ Connected to MongoDB database');
+
       await PostgresDataSource.initialize();
       console.log('✅ Connected to PostgreSQL database');
 

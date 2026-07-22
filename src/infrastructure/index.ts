@@ -1,5 +1,7 @@
 
 export { PostgresDataSource } from './database/postgresql/postgresql.config';
+export { initializeMongoConnection } from './database/mongodb/mongo.config';
+export { LogModel } from './database/mongodb/models/log.model';
 
 export { UserRepository } from './database/postgresql/repositories/user.repository';
 export { VehicleRepository } from './database/postgresql/repositories/vehicle.repository';

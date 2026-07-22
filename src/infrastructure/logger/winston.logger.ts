@@ -4,10 +4,20 @@ import { environment } from '../../config/environment';
 
 const { combine, timestamp, printf, metadata } = winston.format;
 
-const customFormat = printf(({ level, message, timestamp, metadata }) => {
+const promoteMetadata = winston.format((info) => {
+  if (info.metadata && !info.meta) {
+    info.meta = info.metadata;
+  }
+
+  return info;
+});
+
+const customFormat = printf(({ level, message, timestamp, meta, metadata }) => {
   let msg = `${timestamp} [${level.toUpperCase()}]: ${message}`;
-  if (metadata && Object.keys(metadata).length > 0) {
-    msg += ` ${JSON.stringify(metadata)}`;
+  const payload = meta || metadata;
+
+  if (payload && Object.keys(payload).length > 0) {
+    msg += ` ${JSON.stringify(payload)}`;
   }
   return msg;
 });
@@ -17,13 +27,14 @@ export const logger = winston.createLogger({
   format: combine(
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] }),
-    customFormat
+    promoteMetadata()
   ),
   transports: [
     new winston.transports.Console({
       format: combine(
         winston.format.colorize(),
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        promoteMetadata(),
         customFormat
       ),
     }),

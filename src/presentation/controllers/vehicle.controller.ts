@@ -22,7 +22,7 @@ export class VehicleController {
       const vehicle = await this.vehicleManager.create({
         ...dto,
         userId: req.user!.userId,
-      });
+      }, req.user!.userId);
 
       res.status(201).json({
         message: 'Vehicle created successfully',
@@ -97,7 +97,7 @@ export class VehicleController {
         return;
       }
 
-      const updated = await this.vehicleManager.update(req.params.id as string, req.body);
+      const updated = await this.vehicleManager.update(req.params.id as string, req.body, req.user!.userId);
 
       if (!updated) {
         res.status(404).json({ message: 'Vehicle not found' });
@@ -131,7 +131,7 @@ export class VehicleController {
         return;
       }
 
-      await this.vehicleManager.delete(req.params.id as string);
+      await this.vehicleManager.delete(req.params.id as string, req.user!.userId);
       res.status(200).json({ message: 'Vehicle deleted successfully' });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Error deleting vehicle';

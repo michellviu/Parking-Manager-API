@@ -33,7 +33,7 @@ export class ParkingSpotManager {
 
     const spot = await this.parkingSpotRepository.create(spotData);
 
-    logger.info(`Space ${spot.spotNumber} created on the ${spot.floor} floor`, {
+    logger.info(`Parking spot ${spot.spotNumber} created on floor ${spot.floor}`, {
       action: LogAction.SPOT_CREATE,
       userId: performedByUserId,
       spotNumber: spot.spotNumber,
@@ -50,7 +50,7 @@ export class ParkingSpotManager {
     const spot = await this.parkingSpotRepository.update(id, data);
 
     if (spot) {
-      logger.info(`Space ${spot.spotNumber} updated`, {
+      logger.info(`Parking spot ${spot.spotNumber} updated successfully`, {
         action: LogAction.SPOT_UPDATE,
         userId: performedByUserId,
         spotNumber: spot.spotNumber,
@@ -65,7 +65,7 @@ export class ParkingSpotManager {
     const result = await this.parkingSpotRepository.delete(id);
 
     if (result && spot) {
-      logger.info(`Space ${spot.spotNumber} deleted`, {
+      logger.info(`Parking spot ${spot.spotNumber} deleted successfully`, {
         action: LogAction.SPOT_DELETE,
         userId: performedByUserId,
         spotNumber: spot.spotNumber,

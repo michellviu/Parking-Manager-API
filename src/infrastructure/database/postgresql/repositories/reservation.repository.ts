@@ -1,4 +1,4 @@
-import { Repository, Not, LessThan, MoreThan } from 'typeorm';
+import { Repository, LessThan, MoreThan, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 import { IReservationRepository } from '../../../../domain/interfaces/repositories/reservation.repository.interface';
 import { ReservationEntity } from '../../../../domain/entities/reservation.entity';
 import { ReservationModel } from '../models/reservation.model';
@@ -50,8 +50,13 @@ export class ReservationRepository implements IReservationRepository {
   }
 
   async countActiveReservations(): Promise<number> {
+    const now = new Date();
+
     return this.repository.count({
-      where: { status: ReservationStatus.ACTIVE },
+      where: {
+        startTime: LessThanOrEqual(now),
+        endTime: MoreThanOrEqual(now),
+      },
     });
   }
 
