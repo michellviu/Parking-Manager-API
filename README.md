@@ -25,7 +25,7 @@ El proyecto está estructurado en 4 capas principales para garantizar la separac
 ## ⚙️ Requisitos Previos
 
 - [Node.js](https://nodejs.org/) (v18 o superior)
-- [Docker](https://www.docker.com/) y Docker Compose
+- [Docker](https://www.docker.com/)
 
 ## 🛠️ Instalación y Ejecución Local
 
@@ -77,7 +77,7 @@ npm run test
 
 ## 🔐 Autenticación y Roles
 
-La API utiliza un sistema de roles (`admin`, `empleado`, `cliente`). Debes registrarte y hacer login para obtener un Bearer Token JWT. Para probar los endpoints protegidos, envía el token en el Header:
+La API utiliza un sistema de roles (`admin`, `employee`, `client`). Debes registrarte y hacer login para obtener un Bearer Token JWT. Para probar los endpoints protegidos, envía el token en el Header:
 `Authorization: Bearer <tu_token_jwt>`
 
 ## 📖 Colección de Postman
