@@ -21,6 +21,11 @@ export class ReservationController {
         return;
       }
 
+      if (Date.parse(dto.startTime) < Date.now() || Date.parse(dto.endTime) < Date.now()) {
+        res.status(400).json({ message: 'Start time and end time must be in the future' });
+        return;
+      }
+
       const reservation = await this.reservationManager.createReservation(
         dto.vehicleId,
         dto.parkingSpotId,

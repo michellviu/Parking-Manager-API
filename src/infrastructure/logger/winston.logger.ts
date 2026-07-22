@@ -27,18 +27,22 @@ export const logger = winston.createLogger({
         customFormat
       ),
     }),
-    new winston.transports.MongoDB({
-      level: 'info',
-      db: environment.mongodb.uri,
-      options: {
-        useUnifiedTopology: true,
-      },
-      collection: 'winston_logs',
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-      )
-    })
+    ...(environment.nodeEnv === 'test'
+      ? []
+      : [
+          new winston.transports.MongoDB({
+            level: 'info',
+            db: environment.mongodb.uri,
+            options: {
+              useUnifiedTopology: true,
+            },
+            collection: 'winston_logs',
+            format: winston.format.combine(
+              winston.format.timestamp(),
+              winston.format.json()
+            )
+          }),
+        ]),
   ]
 });
 

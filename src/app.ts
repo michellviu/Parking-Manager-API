@@ -67,6 +67,11 @@ class App {
 }
 
 const app = new App();
-app.start();
+
+const isTestRun = process.env.NODE_ENV === 'test' || !!process.env.JEST_WORKER_ID;
+
+if (!isTestRun) {
+  app.start();
+}
 
 export default app.app;
