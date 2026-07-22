@@ -1,0 +1,161 @@
+{
+  "info": {
+    "name": "Parking Manager API",
+    "description": "Colección de Postman para probar los casos de uso del Parking Manager API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Administrador\",\n  \"email\": \"admin@parking.com\",\n  \"phone\": \"000000000\",\n  \"password\": \"admin123\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Register Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cliente VIP\",\n  \"email\": \"cliente@parking.com\",\n  \"phone\": \"123456789\",\n  \"password\": \"pass123\",\n  \"role\": \"client\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@parking.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "auth", "login"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Parking Spots",
+      "item": [
+        {
+          "name": "Crear Plaza (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"spotNumber\": \"A-01\",\n  \"floor\": 1\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/parking-spots", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "parking-spots"] }
+          }
+        },
+        {
+          "name": "Consultar Ocupación (Caso de Uso 2)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/api/parking-spots/occupation", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "parking-spots", "occupation"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "Crear Vehiculo (Cliente)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{client_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"XYZ-987\",\n  \"brand\": \"Ford\",\n  \"model\": \"Mustang\",\n  \"color\": \"Negro\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/vehicles", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "vehicles"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservations",
+      "item": [
+        {
+          "name": "Reservar Plaza (Caso de Uso 1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{client_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": \"ID_DEL_VEHICULO\",\n  \"parkingSpotId\": \"ID_DE_LA_PLAZA\",\n  \"startTime\": \"2026-07-21T10:00:00.000Z\",\n  \"endTime\": \"2026-07-21T12:00:00.000Z\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/reservations", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "reservations"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Actualizar Detalles (Caso de Uso 3)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuevo Nombre Cliente\",\n  \"phone\": \"999888777\"\n}"
+            },
+            "url": { "raw": "http://localhost:3000/api/users/ID_DEL_USUARIO", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "users", "ID_DEL_USUARIO"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Logs",
+      "item": [
+        {
+          "name": "Ver Logs del Parking (Caso de Uso 4)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/api/logs?action=reservation", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "logs"], "query": [{ "key": "action", "value": "reservation" }] }
+          }
+        }
+      ]
+    }
+  ]
+}

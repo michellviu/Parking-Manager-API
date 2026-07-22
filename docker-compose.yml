@@ -4,7 +4,6 @@ services:
 
   postgres:
     image: postgres:latest
-    pull_policy: never
     container_name: parking-postgres
     restart: unless-stopped
     environment:
